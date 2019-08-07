@@ -1,0 +1,45 @@
+<!-- -*- mode: XML -*- -->
+
+<launch>
+	<!-- Startup Commands -->
+		<!-- sudo rmmod xpad && sudo xboxdrv -->
+		<!-- roscore -->
+		<!-- cd ~/gitRepos/design_control_demo && source devel/setup.bash && roslaunch high_level_controller launch_all.launch-->	
+
+	<!-- Parameters -->
+		<!-- <param name="sendTraj" value="0" type="double" /> -->
+
+	<!-- Nodes -->
+		<!-- High Level Controller -->
+		<node pkg="high_level_controller" 
+			type="high_level_controller.py" 
+			name="high_level_controller" 
+			output="screen"/> 
+
+		<!-- Xbox Controller -->
+		<node pkg="joy" 
+			type="joy_node" 
+			name="joy_node"
+			output="screen"/> 
+
+		<!-- Serial Arduino Motor -->
+		<node pkg="rosserial_python"
+			type = "serial_node.py"
+			name = "serial_arduino_motor"
+			output = "screen"
+			args = "/dev/ttyACM0"/>
+
+		<!-- RQT plot -->
+		<node pkg="rqt_plot" 
+			type="rqt_plot" 
+			name="rqt_plot" 
+			output="screen"
+			args="/testing" /> 
+
+		<!-- Rosbag recording -->
+		<node pkg="rosbag" 
+			type="record" 
+			name="recorder" 
+			args="-a -o /home/jacob/gitRepos/design_control_demo/src/high_level_controller/bag_files/"/> 
+
+</launch>
